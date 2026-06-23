@@ -1,0 +1,27 @@
+@import 'tailwindcss';
+@import '@heroui/styles';
+
+@font-face {
+  font-family: 'Gilroy';
+  font-style: normal;
+  src: url('/fonts/Gilroy-Medium.ttf') format('truetype');
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'Gilroy';
+  font-style: normal;
+  src: url('/fonts/Gilroy-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+}
+
+@theme {
+  --color-dark-grey: #1f1f1f;
+  --color-light-grey: #484848;
+
+  --font-gilroy: 'Gilroy', sans-serif;
+}
+
+html {
+  font-family: var(--font-gilroy);
+}
