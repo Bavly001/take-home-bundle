@@ -3,26 +3,35 @@ import CarrotDownIcon from '../../../assets/icons/CarrotDownIcon'
 
 const StepperAccordionItem = ({
   isOpen,
+  id,
   title,
+  totalSteps,
   stepNumber,
   selectedCount,
   Icon,
+  children,
 }: {
   isOpen: boolean
+  id: string
   title: string
   stepNumber: number
+  totalSteps: number
   selectedCount: number
   Icon: React.ComponentType<React.SVGProps<SVGSVGElement>>
+  children: React.ReactNode
 }) => {
   return (
-    <Accordion.Item id="step-1">
+    <Accordion.Item
+      id={id}
+      className={`transition-all duration-300 ${isOpen && stepNumber !== 1 ? 'mt-3.25' : ''}`}
+    >
       <Accordion.Heading
         className={`flex flex-col pt-3.75 transition-all duration-300 ${
-          isOpen ? 'rounded-t-[15px] bg-[#f0f4fa]' : ''
+          isOpen ? 'bg-secondary rounded-t-[15px]' : ''
         }`}
       >
         <span className="text-light-grey ps-3.75 pb-1.25 text-[10px] tracking-[1.6px] uppercase">
-          Step {stepNumber} of 4
+          Step {stepNumber} of {totalSteps}
         </span>
 
         <Accordion.Trigger
@@ -49,13 +58,9 @@ const StepperAccordionItem = ({
       </Accordion.Heading>
 
       <Accordion.Panel
-        className={isOpen ? 'rounded-b-[15px] bg-[#f0f4fa]' : ''}
+        className={isOpen ? 'bg-secondary rounded-b-[15px]' : ''}
       >
-        <Accordion.Body>
-          <div>
-            <p>Test</p>
-          </div>
-        </Accordion.Body>
+        <Accordion.Body>{children}</Accordion.Body>
       </Accordion.Panel>
     </Accordion.Item>
   )

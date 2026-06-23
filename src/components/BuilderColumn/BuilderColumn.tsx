@@ -3,6 +3,8 @@ import StepperAccordionItem from './components/StepperAccordionItem'
 import { useState } from 'react'
 import CameraIcon from '../../assets/icons/CameraIcon'
 import ShieldIcon from '../../assets/icons/ShieldIcon'
+import SensorIcon from '../../assets/icons/SensorIcon'
+import ProtectionIcon from '../../assets/icons/ProtectionIcon'
 
 const STEPS = [
   {
@@ -12,6 +14,14 @@ const STEPS = [
   {
     Icon: ShieldIcon,
     title: 'Choose your plan',
+  },
+  {
+    Icon: SensorIcon,
+    title: 'Choose your sensors',
+  },
+  {
+    Icon: ProtectionIcon,
+    title: 'Add extra protection',
   },
 ]
 
@@ -32,11 +42,17 @@ const BuilderColumn = () => {
             <StepperAccordionItem
               isOpen={isOpen}
               key={`step-${index + 1}`}
+              id={`step-${index + 1}`}
               title={step.title}
               stepNumber={index + 1}
+              totalSteps={STEPS.length}
               selectedCount={0}
               Icon={step.Icon}
-            />
+            >
+              <div>
+                <p>Test {index + 1}</p>
+              </div>
+            </StepperAccordionItem>
           )
         })}
       </Accordion>
