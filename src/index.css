@@ -17,7 +17,24 @@
 
 @theme {
   --color-dark-grey: #1f1f1f;
+  --color-grey: #525963;
   --color-light-grey: #484848;
+  --color-price-grey: #575757;
+  --color-grey-c: #6F7882;
+  --color-grey-obsidian: #0B0D10;
+
+  --color-light-smoke: #f0f4f7;
+  --color-smoke: #e6ebf0;
+  --color-dark-smoke: #CCCCCC;
+
+  --color-primary: #4e2fd2;
+
+  --color-light-green: #1df0bb;
+  --color-green: #0aa288;
+
+  --color-blue: #0000ee;
+
+  --color-red: #d8392b;
 
   --font-gilroy: 'Gilroy', sans-serif;
 }

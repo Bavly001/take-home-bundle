@@ -1,4 +1,3 @@
-import React from 'react'
 import type CustomIconsProps from '../../types/CustomIconsProps'
 
 const CarrotDownIcon: React.FC<CustomIconsProps> = ({

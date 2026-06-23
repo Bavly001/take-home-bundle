@@ -1,0 +1,64 @@
+import { Accordion } from '@heroui/react'
+import CarrotDownIcon from '../../../assets/icons/CarrotDownIcon'
+
+const StepperAccordionItem = ({
+  isOpen,
+  title,
+  stepNumber,
+  selectedCount,
+  Icon,
+}: {
+  isOpen: boolean
+  title: string
+  stepNumber: number
+  selectedCount: number
+  Icon: React.ComponentType<React.SVGProps<SVGSVGElement>>
+}) => {
+  return (
+    <Accordion.Item id="step-1">
+      <Accordion.Heading
+        className={`flex flex-col pt-3.75 transition-all duration-300 ${
+          isOpen ? 'rounded-t-[15px] bg-[#f0f4fa]' : ''
+        }`}
+      >
+        <span className="text-light-grey ps-3.75 pb-1.25 text-[10px] tracking-[1.6px] uppercase">
+          Step {stepNumber} of 4
+        </span>
+
+        <Accordion.Trigger
+          className={`border-dark-grey flex w-full items-center justify-between border-y-[0.5px] px-3.75 py-5 text-[22px] font-semibold transition-all duration-300 ${isOpen ? 'border-b-dark-grey/0' : ''}`}
+        >
+          <div className="flex items-center justify-center gap-2">
+            <Icon />
+            <span className="text-grey-obsidian">{title}</span>
+          </div>
+
+          <div className="flex items-center gap-1">
+            {selectedCount > 0 ? (
+              <span className="text-primary text-sm font-medium">
+                {selectedCount} selected
+              </span>
+            ) : null}
+            <div
+              className={`text-primary transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+            >
+              <CarrotDownIcon color="currentColor" />
+            </div>
+          </div>
+        </Accordion.Trigger>
+      </Accordion.Heading>
+
+      <Accordion.Panel
+        className={isOpen ? 'rounded-b-[15px] bg-[#f0f4fa]' : ''}
+      >
+        <Accordion.Body>
+          <div>
+            <p>Test</p>
+          </div>
+        </Accordion.Body>
+      </Accordion.Panel>
+    </Accordion.Item>
+  )
+}
+
+export default StepperAccordionItem
