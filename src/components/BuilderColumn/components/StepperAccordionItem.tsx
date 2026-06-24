@@ -51,7 +51,7 @@ const StepperAccordionItem = ({
             <div
               className={`text-primary transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
             >
-              <CarrotDownIcon color="currentColor" />
+              <CarrotDownIcon />
             </div>
           </div>
         </Accordion.Trigger>

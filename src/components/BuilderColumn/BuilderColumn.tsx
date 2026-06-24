@@ -5,27 +5,33 @@ import CameraIcon from '../../assets/icons/CameraIcon'
 import ShieldIcon from '../../assets/icons/ShieldIcon'
 import SensorIcon from '../../assets/icons/SensorIcon'
 import ProtectionIcon from '../../assets/icons/ProtectionIcon'
-
-const STEPS = [
-  {
-    Icon: CameraIcon,
-    title: 'Choose your cameras',
-  },
-  {
-    Icon: ShieldIcon,
-    title: 'Choose your plan',
-  },
-  {
-    Icon: SensorIcon,
-    title: 'Choose your sensors',
-  },
-  {
-    Icon: ProtectionIcon,
-    title: 'Add extra protection',
-  },
-]
+import CameraStep from './Steps/CameraStep'
 
 const BuilderColumn = () => {
+
+  const STEPS = [
+    {
+      Icon: CameraIcon,
+      title: 'Choose your cameras',
+      children: <CameraStep />,
+    },
+    {
+      Icon: ShieldIcon,
+      title: 'Choose your plan',
+      children: <div>Test 2</div>,
+    },
+    {
+      Icon: SensorIcon,
+      title: 'Choose your sensors',
+      children: <div>Test 3</div>,
+    },
+    {
+      Icon: ProtectionIcon,
+      title: 'Add extra protection',
+      children: <div>Test 4</div>,
+    },
+  ]
+
   const [expandedKeys, setExpandedKeys] = useState(new Set<Key>(['step-1']))
   return (
     <div className="h-full flex-1">
@@ -49,9 +55,7 @@ const BuilderColumn = () => {
               selectedCount={0}
               Icon={step.Icon}
             >
-              <div>
-                <p>Test {index + 1}</p>
-              </div>
+              {step.children}
             </StepperAccordionItem>
           )
         })}
