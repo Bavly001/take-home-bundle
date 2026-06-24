@@ -1,5 +1,6 @@
 import { Chip } from '@heroui/react'
 import CustomCard from './CustomCard'
+import PlusMinusButton from '../../PlusMinusButton'
 
 interface Product {
   id: number
@@ -36,7 +37,7 @@ const ProductCard = ({
           <h3 className="text-dark-grey text-[16px] font-bold">
             {product.name}
           </h3>
-          <p className="text-dark-grey/75 text-sm">
+          <p className="text-dark-grey/75 text-sm/[130%] tracking-[0.6px]">
             {product.description}{' '}
             <a href="#" className="text-blue underline hover:no-underline">
               Learn more
@@ -53,7 +54,21 @@ const ProductCard = ({
             <span className="text-dark-grey text-xs font-medium">White</span>
           </Chip>
         </div>
-        <div></div>
+        <div className="flex max-h-8.75 w-full items-center justify-between gap-2">
+          <div className="flex items-center gap-2.5">
+            <PlusMinusButton type="minus" isDisabled={false} variant="dark" />
+            <span className="text-dark-grey text-sm font-medium">1</span>
+            <PlusMinusButton type="plus" isDisabled={false} variant="dark" />
+          </div>
+          <div className="flex flex-col text-[16px]">
+            <p className="text-red tracking-[0.6px] line-through">
+              ${product.price}
+            </p>
+            <p className="text-price-grey tracking-[0.6px]">
+              ${product.price}
+            </p>
+          </div>
+        </div>
       </div>
     </CustomCard>
   )

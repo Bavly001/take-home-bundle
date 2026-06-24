@@ -50,7 +50,7 @@ const CAMERAS = [
 
 const CameraStep = () => {
   return (
-    <div className="grid grid-cols-2 gap-3.75">
+    <div className="flex flex-wrap justify-center gap-3.75 *:w-[calc(50%-7.5px)]">
       {CAMERAS.map((camera) => (
         <ProductCard key={camera.id} isActive={false} product={camera} />
       ))}
