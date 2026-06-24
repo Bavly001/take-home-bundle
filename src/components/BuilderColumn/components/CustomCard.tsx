@@ -7,7 +7,7 @@ const CustomCard = ({
 }) => {
   return (
     <div
-      className={`hover:shadow-lg flex flex-row rounded-[10px] border-2 bg-white p-2.75 transition-all duration-300 ${isActive ? 'border-primary/70' : 'border-transparent'}`}
+      className={`flex flex-row rounded-[10px] border-2 bg-white p-2.75 transition-all duration-300 hover:shadow-lg ${isActive ? 'border-primary/70' : 'border-transparent'}`}
     >
       {children}
     </div>

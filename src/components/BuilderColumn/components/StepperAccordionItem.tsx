@@ -60,7 +60,7 @@ const StepperAccordionItem = ({
       <Accordion.Panel
         className={isOpen ? 'bg-secondary rounded-b-[15px]' : ''}
       >
-        <Accordion.Body>{children}</Accordion.Body>
+        <Accordion.Body className="px-3.75 pb-5">{children}</Accordion.Body>
       </Accordion.Panel>
     </Accordion.Item>
   )
