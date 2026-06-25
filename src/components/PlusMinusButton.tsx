@@ -4,12 +4,14 @@ import PlusIcon from '../assets/icons/PlusIcon'
 
 const PlusMinusButton = ({
   type,
-  isDisabled,
+  isDisabled = false,
   variant,
+  onPress,
 }: {
   type: 'plus' | 'minus'
-  isDisabled: boolean
+  isDisabled?: boolean
   variant: 'light' | 'dark'
+  onPress: () => void
 }) => {
   const className =
     variant === 'dark'
@@ -18,13 +20,14 @@ const PlusMinusButton = ({
   return (
     <Button
       isIconOnly
-      className={`flex h-5 w-5 items-center justify-center rounded-sm! border-2! [&_svg]:h-auto! [&_svg]:w-auto! ${className}`}
+      className={`flex h-5 w-5 items-center justify-center rounded-sm! transition-all duration-300! border-2! [&_svg]:h-auto! [&_svg]:w-auto! ${className}`}
       isDisabled={isDisabled}
+      onPress={onPress}
     >
       {type === 'plus' ? (
-        <PlusIcon color={'currentColor'} />
+        <PlusIcon fillColor={'currentColor'} />
       ) : (
-        <MinusIcon color={'currentColor'} />
+        <MinusIcon fillColor={'currentColor'} />
       )}
     </Button>
   )

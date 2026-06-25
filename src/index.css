@@ -4,6 +4,13 @@
 @font-face {
   font-family: 'Gilroy';
   font-style: normal;
+  src: url('/fonts/Gilroy-Regular.ttf') format('truetype');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Gilroy';
+  font-style: normal;
   src: url('/fonts/Gilroy-Medium.ttf') format('truetype');
   font-weight: 500;
 }
@@ -40,6 +47,8 @@
   --color-red: #d8392b;
 
   --font-gilroy: 'Gilroy', sans-serif;
+
+  --breakpoint-xs: 440px;
 }
 
 html,

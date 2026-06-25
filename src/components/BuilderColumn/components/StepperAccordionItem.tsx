@@ -38,7 +38,7 @@ const StepperAccordionItem = ({
           className={`border-dark-grey flex w-full items-center justify-between border-y-[0.5px] px-3.75 py-5 text-[22px] font-semibold transition-all duration-300 ${isOpen ? 'border-b-dark-grey/0' : ''}`}
         >
           <div className="flex items-center justify-center gap-2">
-            <Icon />
+            <Icon className="h-5 w-5 md:h-6.5 md:w-6.5" />
             <span className="text-grey-obsidian">{title}</span>
           </div>
 
