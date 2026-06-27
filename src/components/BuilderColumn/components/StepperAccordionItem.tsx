@@ -27,29 +27,29 @@ const StepperAccordionItem = ({
     >
       <Accordion.Heading
         className={`flex flex-col pt-3.75 transition-all duration-300 ${
-          isOpen ? 'bg-secondary rounded-t-[15px]' : ''
+          isOpen ? 'bg-brand-subtle rounded-t-[15px]' : ''
         }`}
       >
-        <span className="text-light-grey ps-3.75 pb-1.25 text-[10px] tracking-[1.6px] uppercase">
+        <span className="text-slate-700 ps-3.75 pb-1.25 text-[10px] tracking-[1.6px] uppercase">
           Step {stepNumber} of {totalSteps}
         </span>
 
         <Accordion.Trigger
-          className={`border-dark-grey flex w-full items-center justify-between border-y-[0.5px] px-3.75 py-5 text-[22px] font-semibold transition-all duration-300 ${isOpen ? 'border-b-dark-grey/0' : ''}`}
+          className={`border-slate-900 flex w-full items-center justify-between border-y-[0.5px] px-3.75 py-5 text-[22px] font-semibold transition-all duration-300 ${isOpen ? 'border-b-slate-900/0' : ''}`}
         >
           <div className="flex items-center justify-center gap-2">
             <Icon className="h-5 w-5 md:h-6.5 md:w-6.5" />
-            <span className="text-grey-obsidian">{title}</span>
+            <span className="text-slate-950">{title}</span>
           </div>
 
           <div className="flex items-center gap-1">
             {selectedCount > 0 ? (
-              <span className="text-primary text-sm font-medium">
+              <span className="text-brand text-sm font-medium">
                 {selectedCount} selected
               </span>
             ) : null}
             <div
-              className={`text-primary transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+              className={`text-brand transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
             >
               <CarrotDownIcon />
             </div>
@@ -58,7 +58,7 @@ const StepperAccordionItem = ({
       </Accordion.Heading>
 
       <Accordion.Panel
-        className={isOpen ? 'bg-secondary rounded-b-[15px]' : ''}
+        className={isOpen ? 'bg-brand-subtle rounded-b-[15px]' : ''}
       >
         <Accordion.Body className="px-3.75 pb-5">{children}</Accordion.Body>
       </Accordion.Panel>

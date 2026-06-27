@@ -63,7 +63,7 @@ const CameraStep = () => {
       </div>
       <Button
         variant="outline"
-        className="border-primary text-primary rounded-[7px] border px-6 py-1.25 text-[18px] font-bold"
+        className="border-brand text-brand rounded-[7px] border px-6 py-1.25 text-[18px] font-bold"
         onPress={() => {}}
       >
         Next: Choose your plan

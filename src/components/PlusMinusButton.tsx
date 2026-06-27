@@ -15,8 +15,8 @@ const PlusMinusButton = ({
 }) => {
   const className =
     variant === 'dark'
-      ? 'text-grey border-light-smoke bg-light-smoke disabled:text-light-grey-c disabled:bg-white disabled:border-light-grey-c'
-      : 'text-price-grey border-white bg-white disabled:text-price-grey disabled:bg-grey-smoke disabled:border-light-grey-c'
+      ? 'text-slate-600 border-slate-50 bg-slate-50 disabled:text-slate-300 disabled:bg-white disabled:border-slate-300'
+      : 'text-slate-550 border-white bg-white disabled:text-slate-550 disabled:bg-slate-100 disabled:border-slate-300'
   return (
     <Button
       isIconOnly
