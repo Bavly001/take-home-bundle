@@ -11,7 +11,7 @@ const PlusMinusButton = ({
   type: 'plus' | 'minus'
   isDisabled?: boolean
   variant: 'light' | 'dark'
-  onPress: () => void
+  onPress?: () => void
 }) => {
   const className =
     variant === 'dark'
@@ -22,7 +22,7 @@ const PlusMinusButton = ({
       isIconOnly
       className={`flex h-5 w-5 items-center justify-center rounded-sm! transition-all duration-300! border-2! [&_svg]:h-auto! [&_svg]:w-auto! ${className}`}
       isDisabled={isDisabled}
-      onPress={onPress}
+      onPress={onPress ?? undefined}
     >
       {type === 'plus' ? (
         <PlusIcon fillColor={'currentColor'} />

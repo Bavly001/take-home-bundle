@@ -34,7 +34,7 @@ const BuilderColumn = () => {
 
   const [expandedKeys, setExpandedKeys] = useState(new Set<Key>(['step-1']))
   return (
-    <div className="h-full flex-1">
+    <div className="h-full xl:flex-1">
       <Accordion
         expandedKeys={expandedKeys}
         onExpandedChange={setExpandedKeys}
