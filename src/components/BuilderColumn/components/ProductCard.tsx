@@ -65,11 +65,8 @@ const ProductCard = ({ product }: { product: Product }) => {
   const handleIncrement = () => {
     setQuantity({
       productId: product.id,
-
       category: product.category,
-
       quantity: selectedCount + 1,
-
       variantId: resolvedVariantId,
     })
   }
@@ -77,11 +74,8 @@ const ProductCard = ({ product }: { product: Product }) => {
   const handleDecrement = () => {
     setQuantity({
       productId: product.id,
-
       category: product.category,
-
       quantity: Math.max(0, selectedCount - 1),
-
       variantId: resolvedVariantId,
     })
   }
