@@ -1,38 +1,38 @@
-import { Accordion, type Key } from '@heroui/react'
-import StepperAccordionItem from './components/StepperAccordionItem'
-import { useState } from 'react'
+import { Accordion } from '@heroui/react'
 import CameraIcon from '../../assets/icons/CameraIcon'
 import ShieldIcon from '../../assets/icons/ShieldIcon'
 import SensorIcon from '../../assets/icons/SensorIcon'
 import ProtectionIcon from '../../assets/icons/ProtectionIcon'
+import { BUILDER_STEPS } from '../../constants/steps'
+import { useAccordionStore } from '../../stores/useAccordionStore'
+import { useCartStore } from '../../stores/useCartStore'
 import CameraStep from './Steps/CameraStep'
+import StepperAccordionItem from './components/StepperAccordionItem'
+
+const STEP_CONTENT = [
+  { Icon: CameraIcon, title: 'Choose your cameras', children: <CameraStep /> },
+  {
+    Icon: ShieldIcon,
+    title: 'Choose your plan',
+    children: <div>Test 2</div>,
+  },
+  {
+    Icon: SensorIcon,
+    title: 'Choose your sensors',
+    children: <div>Test 3</div>,
+  },
+  {
+    Icon: ProtectionIcon,
+    title: 'Add extra protection',
+    children: <div>Test 4</div>,
+  },
+]
 
 const BuilderColumn = () => {
+  const expandedKeys = useAccordionStore((state) => state.expandedKeys)
+  const setExpandedKeys = useAccordionStore((state) => state.setExpandedKeys)
+  const cartItems = useCartStore((state) => state.items)
 
-  const STEPS = [
-    {
-      Icon: CameraIcon,
-      title: 'Choose your cameras',
-      children: <CameraStep />,
-    },
-    {
-      Icon: ShieldIcon,
-      title: 'Choose your plan',
-      children: <div>Test 2</div>,
-    },
-    {
-      Icon: SensorIcon,
-      title: 'Choose your sensors',
-      children: <div>Test 3</div>,
-    },
-    {
-      Icon: ProtectionIcon,
-      title: 'Add extra protection',
-      children: <div>Test 4</div>,
-    },
-  ]
-
-  const [expandedKeys, setExpandedKeys] = useState(new Set<Key>(['step-1']))
   return (
     <div className="h-full xl:flex-1">
       <Accordion
@@ -41,18 +41,21 @@ const BuilderColumn = () => {
         className="p-0"
         hideSeparator
       >
-        {STEPS.map((step, index) => {
-          const isOpen = expandedKeys.has(`step-${index + 1}`)
+        {STEP_CONTENT.map((step, index) => {
+          const { key, category } = BUILDER_STEPS[index]
+          const isOpen = expandedKeys.has(key)
 
           return (
             <StepperAccordionItem
               isOpen={isOpen}
-              key={`step-${index + 1}`}
-              id={`step-${index + 1}`}
+              key={key}
+              id={key}
               title={step.title}
               stepNumber={index + 1}
-              totalSteps={STEPS.length}
-              selectedCount={0}
+              totalSteps={STEP_CONTENT.length}
+              selectedCount={cartItems
+                .filter((item) => item.category === category)
+                .reduce((total, item) => total + item.quantity, 0)}
               Icon={step.Icon}
             >
               {step.children}

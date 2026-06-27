@@ -1,8 +1,19 @@
+import { BUILDER_STEPS } from '../../constants/steps'
+import { useCartStore } from '../../stores/useCartStore'
+import ReviewEmptyState from './components/ReviewEmptyState'
 import ReviewSection from './components/ReviewSection'
 
 const ReviewColumn = () => {
+  const items = useCartStore((state) => state.items)
+  const hasItems = items.some((item) => item.quantity > 0)
+  const categoriesWithItems = BUILDER_STEPS.map(
+    ({ category }) => category
+  ).filter((category) =>
+    items.some((item) => item.category === category && item.quantity > 0)
+  )
+
   return (
-    <div className="relative min-h-full w-full xl:max-w-100 xl:w-1/3">
+    <div className="relative min-h-full w-full xl:w-1/3 xl:max-w-100">
       <div className="bg-brand-subtle top-5 flex h-full w-full flex-col gap-1.25 rounded-[10px] py-3.75 pe-2.25 xl:sticky xl:h-auto">
         <p className="ms-3.75 text-[12px] font-medium tracking-[1.6px] text-slate-700 uppercase">
           Review
@@ -17,7 +28,13 @@ const ReviewColumn = () => {
               matters most safe.
             </p>
           </div>
-          <ReviewSection title="Cameras" />
+          {hasItems ? (
+            categoriesWithItems.map((category) => (
+              <ReviewSection key={category} category={category} />
+            ))
+          ) : (
+            <ReviewEmptyState />
+          )}
         </div>
       </div>
     </div>

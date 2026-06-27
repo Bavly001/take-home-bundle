@@ -30,12 +30,12 @@ const StepperAccordionItem = ({
           isOpen ? 'bg-brand-subtle rounded-t-[15px]' : ''
         }`}
       >
-        <span className="text-slate-700 ps-3.75 pb-1.25 text-[10px] tracking-[1.6px] uppercase">
+        <span className="ps-3.75 pb-1.25 text-[10px] tracking-[1.6px] text-slate-700 uppercase">
           Step {stepNumber} of {totalSteps}
         </span>
 
         <Accordion.Trigger
-          className={`border-slate-900 flex w-full items-center justify-between border-y-[0.5px] px-3.75 py-5 text-[22px] font-semibold transition-all duration-300 ${isOpen ? 'border-b-slate-900/0' : ''}`}
+          className={`flex w-full items-center justify-between border-y-[0.5px] border-slate-900 px-3.75 py-5 text-[22px] font-semibold transition-all duration-300 ${isOpen ? 'border-b-slate-900/0' : ''}`}
         >
           <div className="flex items-center justify-center gap-2">
             <Icon className="h-5 w-5 md:h-6.5 md:w-6.5" />
