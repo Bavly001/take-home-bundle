@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { getProductById } from '../data/products'
+import { getProductById, useProductStore } from './useProductStore'
 import type { CartItem, Product, ProductCategory } from '../types/product'
 
 interface SetQuantityParams {
@@ -9,9 +9,16 @@ interface SetQuantityParams {
   variantId?: number
 }
 
+interface SelectExclusiveParams {
+  productId: number
+  category: ProductCategory
+  variantId?: number
+}
+
 interface CartStore {
   items: CartItem[]
   setQuantity: (params: SetQuantityParams) => void
+  selectExclusive: (params: SelectExclusiveParams) => void
   getItemsByCategory: (category: ProductCategory) => CartItem[]
   getSelectedCountByCategory: (category: ProductCategory) => number
   getTotalSelectedCount: () => number
@@ -30,6 +37,44 @@ export const matchesCartLine = (
 export const getCartLineKey = (item: CartItem) =>
   `${item.category}-${item.productId}-${item.variantId ?? 'base'}`
 
+// Required products (e.g. the Wyze Sense Hub) are auto-added to the cart while
+// any non-required item of the same category is selected, and removed once none
+// remain. They cannot be selected or adjusted directly by the user.
+const syncRequiredItems = (items: CartItem[]): CartItem[] => {
+  const requiredProducts = Object.values(
+    useProductStore.getState().productsById
+  ).filter((product) => product.required)
+
+  let next = items
+
+  for (const required of requiredProducts) {
+    const hasUserItemInCategory = next.some(
+      (item) =>
+        item.category === required.category &&
+        item.quantity > 0 &&
+        item.productId !== required.id
+    )
+
+    const index = next.findIndex(
+      (item) =>
+        item.productId === required.id &&
+        item.category === required.category &&
+        item.variantId === undefined
+    )
+
+    if (hasUserItemInCategory && index === -1) {
+      next = [
+        ...next,
+        { productId: required.id, category: required.category, quantity: 1 },
+      ]
+    } else if (!hasUserItemInCategory && index !== -1) {
+      next = next.filter((_, i) => i !== index)
+    }
+  }
+
+  return next
+}
+
 export const useCartStore = create<CartStore>((set, get) => ({
   items: [],
 
@@ -39,25 +84,33 @@ export const useCartStore = create<CartStore>((set, get) => ({
         matchesCartLine(item, productId, category, variantId)
       )
 
+      let items: CartItem[]
       if (quantity <= 0) {
-        if (existingIndex === -1) return state
-        return {
-          items: state.items.filter((_, index) => index !== existingIndex),
-        }
+        items =
+          existingIndex === -1
+            ? state.items
+            : state.items.filter((_, index) => index !== existingIndex)
+      } else if (existingIndex === -1) {
+        items = [...state.items, { productId, category, quantity, variantId }]
+      } else {
+        items = state.items.map((item, index) =>
+          index === existingIndex ? { ...item, quantity } : item
+        )
       }
 
-      if (existingIndex === -1) {
-        return {
-          items: [...state.items, { productId, category, quantity, variantId }],
-        }
-      }
+      return { items: syncRequiredItems(items) }
+    })
+  },
 
-      const updatedItems = [...state.items]
-      updatedItems[existingIndex] = {
-        ...updatedItems[existingIndex],
-        quantity,
-      }
-      return { items: updatedItems }
+  // Single-select categories (e.g. plans): selecting one item replaces any
+  // other item in the same category.
+  selectExclusive: ({ productId, category, variantId }) => {
+    set((state) => {
+      const items = [
+        ...state.items.filter((item) => item.category !== category),
+        { productId, category, quantity: 1, variantId },
+      ]
+      return { items: syncRequiredItems(items) }
     })
   },
 

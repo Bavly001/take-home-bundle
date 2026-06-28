@@ -16,6 +16,7 @@ export interface Product {
   image?: string
   variants?: ProductVariant[]
   category: ProductCategory
+  required: boolean
 }
 
 export interface CartItem {

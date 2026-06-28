@@ -1,14 +1,14 @@
-import { BUILDER_STEPS } from '../../constants/steps'
+import DeliveryIcon from '../../assets/icons/DeliveryIcon'
+import { REVIEW_ORDER } from '../../constants/steps'
 import { useCartStore } from '../../stores/useCartStore'
 import ReviewEmptyState from './components/ReviewEmptyState'
+import ReviewItem from './components/ReviewItem'
 import ReviewSection from './components/ReviewSection'
 
 const ReviewColumn = () => {
   const items = useCartStore((state) => state.items)
   const hasItems = items.some((item) => item.quantity > 0)
-  const categoriesWithItems = BUILDER_STEPS.map(
-    ({ category }) => category
-  ).filter((category) =>
+  const categoriesWithItems = REVIEW_ORDER.filter((category) =>
     items.some((item) => item.category === category && item.quantity > 0)
   )
 
@@ -29,9 +29,23 @@ const ReviewColumn = () => {
             </p>
           </div>
           {hasItems ? (
-            categoriesWithItems.map((category) => (
-              <ReviewSection key={category} category={category} />
-            ))
+            <>
+              {categoriesWithItems.map((category) => (
+                <ReviewSection key={category} category={category} />
+              ))}
+              <div className="flex flex-col gap-2 border-t border-slate-300 pt-3.75">
+                <ReviewItem
+                  name="Fast Shipping"
+                  icon={<DeliveryIcon className="h-7.25 w-7.25" />}
+                  quantity={1}
+                  price={5.99}
+                  priceAfterDiscount={0}
+                  hideQuantityControls
+                  onIncrement={() => {}}
+                  onDecrement={() => {}}
+                />
+              </div>
+            </>
           ) : (
             <ReviewEmptyState />
           )}

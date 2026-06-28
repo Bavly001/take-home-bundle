@@ -31,7 +31,7 @@ const ReviewSection = ({ category }: { category: ProductCategory }) => {
           const resolved = resolveCartItem(item)
           if (!resolved) return null
 
-          const { display } = resolved
+          const { display, product } = resolved
 
           return (
             <ReviewItem
@@ -42,6 +42,8 @@ const ReviewSection = ({ category }: { category: ProductCategory }) => {
               quantity={display.quantity}
               price={display.price}
               priceAfterDiscount={display.priceAfterDiscount}
+              isRequired={product.required}
+              hideQuantityControls={category === 'plans'}
               onIncrement={() =>
                 setQuantity({
                   productId: item.productId,

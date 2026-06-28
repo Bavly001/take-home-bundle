@@ -4,8 +4,16 @@ export const CATEGORY_LABELS: Record<ProductCategory, string> = {
   cameras: 'Cameras',
   plans: 'Plan',
   sensors: 'Sensors',
-  protection: 'Extra protection',
+  protection: 'Accessories',
 }
+
+// Order of sections in the review column (differs from the builder step order).
+export const REVIEW_ORDER: ProductCategory[] = [
+  'cameras',
+  'sensors',
+  'protection',
+  'plans',
+]
 
 export const BUILDER_STEPS: {
   key: string
@@ -17,4 +25,4 @@ export const BUILDER_STEPS: {
   { key: 'step-4', category: 'protection' },
 ]
 
-export const FIRST_STEP_KEY = BUILDER_STEPS[0].key
+export const FIRST_STEP_KEY = 'step-1'

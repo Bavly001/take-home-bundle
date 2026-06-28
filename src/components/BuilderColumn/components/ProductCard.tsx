@@ -1,13 +1,9 @@
 import { Chip } from '@heroui/react'
-
 import { useMemo, useState } from 'react'
-
 import type { Product } from '../../../types/product'
-
 import { matchesCartLine, useCartStore } from '../../../stores/useCartStore'
-
+import { formatPrice } from '../../../utils/price'
 import CustomCard from './CustomCard'
-
 import PlusMinusButton from '../../PlusMinusButton'
 
 const ProductCard = ({ product }: { product: Product }) => {
@@ -16,6 +12,8 @@ const ProductCard = ({ product }: { product: Product }) => {
   const [selectedVariantId, setSelectedVariantId] = useState(defaultVariantId)
 
   const setQuantity = useCartStore((state) => state.setQuantity)
+
+  const selectExclusive = useCartStore((state) => state.selectExclusive)
 
   const cartItems = useCartStore((state) => state.items)
 
@@ -41,15 +39,7 @@ const ProductCard = ({ product }: { product: Product }) => {
 
   const selectedCount =
     productCartItems.find((item) =>
-      matchesCartLine(
-        item,
-
-        product.id,
-
-        product.category,
-
-        resolvedVariantId
-      )
+      matchesCartLine(item, product.id, product.category, resolvedVariantId)
     )?.quantity ?? 0
 
   const selectedVariant = product.variants?.find(
@@ -80,9 +70,29 @@ const ProductCard = ({ product }: { product: Product }) => {
     })
   }
 
+  const isSingleSelect = product.category === 'plans'
+
+  const handleToggleSingle = () => {
+    if (selectedCount > 0) {
+      setQuantity({
+        productId: product.id,
+        category: product.category,
+        quantity: 0,
+        variantId: resolvedVariantId,
+      })
+    } else {
+      selectExclusive({
+        productId: product.id,
+        category: product.category,
+        variantId: resolvedVariantId,
+      })
+    }
+  }
+
   return (
     <CustomCard
       isActive={totalCount > 0}
+      onClick={isSingleSelect ? handleToggleSingle : undefined}
       className="flex min-h-43.25 flex-col gap-y-4.75 xl:flex-row"
     >
       <div className="flex h-full items-center justify-center">
@@ -146,24 +156,26 @@ const ProductCard = ({ product }: { product: Product }) => {
         )}
 
         <div className="flex max-h-8.75 w-full items-center justify-between gap-2">
-          <div className="flex w-20 items-center justify-between px-[5.5px]">
-            <PlusMinusButton
-              type="minus"
-              isDisabled={selectedCount === 0}
-              variant="dark"
-              onPress={handleDecrement}
-            />
+          {!isSingleSelect && (
+            <div className="flex w-20 items-center justify-between px-[5.5px]">
+              <PlusMinusButton
+                type="minus"
+                isDisabled={selectedCount === 0}
+                variant="dark"
+                onPress={handleDecrement}
+              />
 
-            <span className="text-sm font-medium text-slate-900">
-              {selectedCount}
-            </span>
+              <span className="text-sm font-medium text-slate-900">
+                {selectedCount}
+              </span>
 
-            <PlusMinusButton
-              type="plus"
-              variant="dark"
-              onPress={handleIncrement}
-            />
-          </div>
+              <PlusMinusButton
+                type="plus"
+                variant="dark"
+                onPress={handleIncrement}
+              />
+            </div>
+          )}
 
           <div className="flex items-end gap-0.75 text-[16px] xl:flex-col">
             {product.discount && (
@@ -173,7 +185,11 @@ const ProductCard = ({ product }: { product: Product }) => {
             )}
 
             <p className="text-slate-550 leading-4 tracking-[0.6px]">
-              ${product.discount ? product.priceAfterDiscount : product.price}
+              {formatPrice(
+                product.discount
+                  ? (product.priceAfterDiscount ?? product.price)
+                  : product.price
+              )}
             </p>
           </div>
         </div>

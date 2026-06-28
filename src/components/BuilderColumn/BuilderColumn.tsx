@@ -6,25 +6,48 @@ import ProtectionIcon from '../../assets/icons/ProtectionIcon'
 import { BUILDER_STEPS } from '../../constants/steps'
 import { useAccordionStore } from '../../stores/useAccordionStore'
 import { useCartStore } from '../../stores/useCartStore'
-import CameraStep from './Steps/CameraStep'
+import { getProductById } from '../../stores/useProductStore'
+import ProductStep from './Steps/ProductStep'
 import StepperAccordionItem from './components/StepperAccordionItem'
 
 const STEP_CONTENT = [
-  { Icon: CameraIcon, title: 'Choose your cameras', children: <CameraStep /> },
+  {
+    Icon: CameraIcon,
+    title: 'Choose your cameras',
+    children: (
+      <ProductStep
+        category="cameras"
+        nextStepKey="step-2"
+        nextLabel="Next: Choose your plan"
+      />
+    ),
+  },
   {
     Icon: ShieldIcon,
     title: 'Choose your plan',
-    children: <div>Test 2</div>,
+    children: (
+      <ProductStep
+        category="plans"
+        nextStepKey="step-3"
+        nextLabel="Next: Choose your sensors"
+      />
+    ),
   },
   {
     Icon: SensorIcon,
     title: 'Choose your sensors',
-    children: <div>Test 3</div>,
+    children: (
+      <ProductStep
+        category="sensors"
+        nextStepKey="step-4"
+        nextLabel="Next: Add extra protection"
+      />
+    ),
   },
   {
     Icon: ProtectionIcon,
     title: 'Add extra protection',
-    children: <div>Test 4</div>,
+    children: <ProductStep category="protection" />,
   },
 ]
 
@@ -54,7 +77,11 @@ const BuilderColumn = () => {
               stepNumber={index + 1}
               totalSteps={STEP_CONTENT.length}
               selectedCount={cartItems
-                .filter((item) => item.category === category)
+                .filter(
+                  (item) =>
+                    item.category === category &&
+                    !getProductById(item.productId)?.required
+                )
                 .reduce((total, item) => total + item.quantity, 0)}
               Icon={step.Icon}
             >
