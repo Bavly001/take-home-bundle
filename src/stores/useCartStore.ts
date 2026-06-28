@@ -19,6 +19,7 @@ interface CartStore {
   items: CartItem[]
   setQuantity: (params: SetQuantityParams) => void
   selectExclusive: (params: SelectExclusiveParams) => void
+  restoreItems: (items: CartItem[]) => void
   getItemsByCategory: (category: ProductCategory) => CartItem[]
   getSelectedCountByCategory: (category: ProductCategory) => number
   getTotalSelectedCount: () => number
@@ -112,6 +113,10 @@ export const useCartStore = create<CartStore>((set, get) => ({
       ]
       return { items: syncRequiredItems(items) }
     })
+  },
+
+  restoreItems: (items) => {
+    set({ items: syncRequiredItems(items) })
   },
 
   getItemsByCategory: (category) =>

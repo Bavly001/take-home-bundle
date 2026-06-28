@@ -62,3 +62,27 @@ html::-webkit-scrollbar,
 body::-webkit-scrollbar {
   display: none;
 }
+
+.scrollbar-minimal {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-slate-400) transparent;
+}
+
+.scrollbar-minimal::-webkit-scrollbar {
+  width: 4px;
+}
+
+.scrollbar-minimal::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-minimal::-webkit-scrollbar-thumb {
+  background-color: var(--color-slate-400);
+  border-radius: 9999px;
+}
+
+.scrollbar-minimal::-webkit-scrollbar-button {
+  display: none;
+  height: 0;
+  width: 0;
+}

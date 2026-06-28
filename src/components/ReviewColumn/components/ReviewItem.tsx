@@ -12,8 +12,8 @@ interface ReviewItemProps {
   priceAfterDiscount?: number
   isRequired?: boolean
   hideQuantityControls?: boolean
-  onIncrement: () => void
-  onDecrement: () => void
+  onIncrement?: () => void
+  onDecrement?: () => void
 }
 
 const ReviewItem = ({
@@ -62,7 +62,7 @@ const ReviewItem = ({
               type="minus"
               variant="light"
               isDisabled={isRequired || quantity === 0}
-              onPress={onDecrement}
+              onPress={onDecrement ?? undefined}
             />
             <span className="text-sm font-medium text-slate-900">
               {quantity}
@@ -71,7 +71,7 @@ const ReviewItem = ({
               type="plus"
               variant="light"
               isDisabled={isRequired}
-              onPress={onIncrement}
+              onPress={onIncrement ?? undefined}
             />
           </div>
         )}
