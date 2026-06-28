@@ -13,17 +13,12 @@ export interface SavedCartItem {
 export interface SavedSystem {
   version: number
   items: SavedCartItem[]
-  expandedStepKey?: string
 }
 
-export const saveSystemToStorage = (
-  items: SavedCartItem[],
-  expandedStepKey?: string,
-) => {
+export const saveSystemToStorage = (items: SavedCartItem[]) => {
   const payload: SavedSystem = {
     version: STORAGE_VERSION,
     items,
-    expandedStepKey,
   }
   localStorage.setItem(STORAGE_KEY, JSON.stringify(payload))
 }

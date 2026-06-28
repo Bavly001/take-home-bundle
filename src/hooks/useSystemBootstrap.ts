@@ -1,7 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
 import { getAllProducts } from '../api/products'
-import { useAccordionStore } from '../stores/useAccordionStore'
 import { useCartStore } from '../stores/useCartStore'
 import { getProductById, useProductStore } from '../stores/useProductStore'
 import { useSystemStore } from '../stores/useSystemStore'
@@ -26,7 +25,6 @@ const sanitizeSavedItems = (items: SavedCartItem[]): SavedCartItem[] =>
 export const useSystemBootstrap = () => {
   const upsertProducts = useProductStore((state) => state.upsertProducts)
   const restoreItems = useCartStore((state) => state.restoreItems)
-  const openStep = useAccordionStore((state) => state.openStep)
   const setCatalogReady = useSystemStore((state) => state.setCatalogReady)
   const isCatalogReady = useSystemStore((state) => state.isCatalogReady)
 
@@ -46,13 +44,10 @@ export const useSystemBootstrap = () => {
       if (validItems.length) {
         restoreItems(toCartItems(validItems))
       }
-      if (saved.expandedStepKey) {
-        openStep(saved.expandedStepKey)
-      }
     }
 
     setCatalogReady(true)
-  }, [query.data, upsertProducts, restoreItems, openStep, setCatalogReady])
+  }, [query.data, upsertProducts, restoreItems, setCatalogReady])
 
   useEffect(() => {
     if (query.isError) {

@@ -1,7 +1,6 @@
 import { useCallback, useMemo } from 'react'
 import DeliveryIcon from '../../assets/icons/DeliveryIcon'
 import { REVIEW_ORDER } from '../../constants/steps'
-import { useAccordionStore } from '../../stores/useAccordionStore'
 import { resolveCartItem, useCartStore } from '../../stores/useCartStore'
 import { getProductById } from '../../stores/useProductStore'
 import { useSystemStore } from '../../stores/useSystemStore'
@@ -22,7 +21,6 @@ import { Button, Chip } from '@heroui/react'
 const ReviewColumn = () => {
   const isCatalogReady = useSystemStore((state) => state.isCatalogReady)
   const items = useCartStore((state) => state.items)
-  const expandedKeys = useAccordionStore((state) => state.expandedKeys)
   const showToast = useToastStore((state) => state.showToast)
 
   const resolvedItems = useMemo(
@@ -55,13 +53,9 @@ const ReviewColumn = () => {
       return product && !product.required
     })
 
-    const expandedStepKey = expandedKeys.values().next().value as
-      | string
-      | undefined
-
-    saveSystemToStorage(toSavedCartItems(userItems), expandedStepKey)
+    saveSystemToStorage(toSavedCartItems(userItems))
     showToast('Your items are saved successfully')
-  }, [items, expandedKeys, showToast])
+  }, [items, showToast])
 
   return (
     <div className="relative min-h-full w-full xl:w-1/3 xl:max-w-100">
